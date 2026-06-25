@@ -1,123 +1,664 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Transatel AI Assistant</title>
-
-  <!-- Responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auriga AI Assistant – Transatel</title>
+  <meta name="description" content="AI-powered assistant for Transatel's Auriga platform, API integration, and developer documentation." />
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Kapa.ai widget -->
+  <script
+    defer
+    src="https://widget.kapa.ai/kapa-widget.bundle.js"
+    data-website-id="YOUR_KAPA_WEBSITE_ID"
+    data-project-name="Auriga"
+    data-project-color="#5B2D8E"
+    data-project-logo="https://developers.transatel.com/favicon.ico"
+    id="kapa-widget-script"
+  ></script>
 
   <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: #f9fafb;
-      color: #111827;
+    /* ── Tokens ─────────────────────────────────────────── */
+    :root {
+      --purple:       #5B2D8E;
+      --purple-dark:  #3D1A6E;
+      --purple-light: #7B4FBB;
+      --purple-faint: #F4EFFE;
+      --accent:       #00B4D8;
+      --text:         #1C1C2E;
+      --text-muted:   #6B7080;
+      --border:       #E4E2EE;
+      --bg:           #FFFFFF;
+      --bg-alt:       #F8F7FC;
+      --radius:       10px;
+      --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
     }
 
-    header {
+    /* ── Reset ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Fonts ───────────────────────────────────────────── */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    /* ── Topbar ─────────────────────────────────────────── */
+    .topbar {
+      background: var(--text);
+      color: #fff;
+      font-size: 12px;
+      padding: 0 32px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 24px;
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
+      letter-spacing: 0.01em;
     }
+    .topbar-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .topbar-links a {
+      color: rgba(255,255,255,0.7);
+      transition: color 0.15s;
+    }
+    .topbar-links a:hover { color: #fff; }
 
-    .logo {
+    /* ── Navbar ─────────────────────────────────────────── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 60px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
     }
-
-    .logo img {
-      height: 32px;
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-
-    .logo span {
+    .navbar-brand svg { flex-shrink: 0; }
+    .brand-divider {
+      width: 1px;
+      height: 22px;
+      background: var(--border);
+    }
+    .brand-label {
+      font-size: 13px;
       font-weight: 600;
-      font-size: 16px;
+      color: var(--purple);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
-    main {
-      text-align: center;
-      margin-top: 100px;
-      padding: 0 20px;
+    /* ── Lang toggle ────────────────────────────────────── */
+    .lang-toggle {
+      display: flex;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      font-size: 13px;
+      font-weight: 500;
     }
-
-    h1 {
-      font-size: 36px;
-      margin-bottom: 16px;
-    }
-
-    p {
-      font-size: 18px;
-      color: #6b7280;
-      margin-bottom: 32px;
-    }
-
-    .cta {
-      background: #0033A0; /* NTT blue */
-      color: white;
+    .lang-toggle button {
+      background: none;
       border: none;
-      padding: 14px 24px;
-      font-size: 16px;
-      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.2s;
+      padding: 6px 14px;
+      color: var(--text-muted);
+      transition: background 0.15s, color 0.15s;
+    }
+    .lang-toggle button.active {
+      background: var(--purple);
+      color: #fff;
+    }
+    .lang-toggle button:hover:not(.active) {
+      background: var(--border);
+      color: var(--text);
     }
 
-    .cta:hover {
-      background: #00267a;
-    }
-
-    footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      padding: 12px;
+    /* ── Hero ───────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple) 55%, var(--purple-light) 100%);
+      color: #fff;
+      padding: 72px 40px 80px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 100px;
+      padding: 4px 14px;
       font-size: 12px;
-      color: #9ca3af;
-      background: #f3f4f6;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      backdrop-filter: blur(4px);
+    }
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #FFD166;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .hero h1 span {
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: 18px;
+      line-height: 1.6;
+      opacity: 0.85;
+      max-width: 600px;
+      margin: 0 auto 40px;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      color: var(--purple);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      border: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+    }
+    .hero-cta svg { flex-shrink: 0; }
+
+    /* ── Features ───────────────────────────────────────── */
+    .features {
+      background: var(--bg-alt);
+      padding: 64px 40px;
+    }
+    .features-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 48px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .card:hover {
+      box-shadow: 0 6px 24px rgba(91,45,142,0.1);
+      border-color: var(--purple-light);
+    }
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--purple-faint);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: var(--purple);
+    }
+    .card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ── Beta Notice ─────────────────────────────────────── */
+    .beta-notice {
+      background: var(--bg);
+      padding: 48px 40px;
+    }
+    .beta-notice-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .notice-box {
+      background: var(--purple-faint);
+      border: 1px solid rgba(91,45,142,0.2);
+      border-left: 4px solid var(--purple);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .notice-icon {
+      color: var(--purple);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .notice-content h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--purple-dark);
+    }
+    .notice-content p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .notice-content strong { color: var(--text); }
+
+    /* ── Chatbot section ─────────────────────────────────── */
+    .chatbot-section {
+      background: var(--bg-alt);
+      padding: 64px 40px;
+      text-align: center;
+    }
+    .chatbot-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .chatbot-inner .section-label { text-align: center; }
+    .chatbot-inner .section-title { text-align: center; margin-bottom: 16px; }
+    .chatbot-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+    .open-chat-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--purple);
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 32px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 16px rgba(91,45,142,0.3);
+    }
+    .open-chat-btn:hover {
+      background: var(--purple-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(91,45,142,0.35);
+    }
+    .sources-note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .sources-note a {
+      color: var(--purple);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: opacity 0.15s;
+    }
+    .sources-note a:hover { opacity: 0.75; }
+
+    /* ── Footer ─────────────────────────────────────────── */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.55);
+      padding: 32px 40px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer a {
+      color: rgba(255,255,255,0.7);
+      transition: color 0.15s;
+    }
+    footer a:hover { color: #fff; }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .topbar { display: none; }
+      .navbar { padding: 0 20px; }
+      .hero { padding: 56px 24px 64px; }
+      .features, .beta-notice, .chatbot-section { padding: 48px 24px; }
+      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
     }
   </style>
 </head>
-
 <body>
 
-<header>
-  <div class="logo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/NTT_logo_2013.svg" alt="NTT logo">
-    <span>Transatel Developer Platform</span>
-  </div>
-</header>
+  <!-- Auriga-style Header -->
+  <header class="auriga-header">
+    <div class="auriga-header-left">
+      <!-- NTT + Transatel logo block -->
+      <a href="https://transatel.com" target="_blank" class="auriga-logo-link" aria-label="Transatel – NTT Global Connectivity">
+        <div class="auriga-ntt-logo">
+          <!-- NTT ring icon -->
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="16" cy="16" r="14" stroke="white" stroke-width="2.2" fill="none"/>
+            <circle cx="16" cy="16" r="7" stroke="white" stroke-width="2.2" fill="none"/>
+            <line x1="16" y1="2" x2="16" y2="30" stroke="white" stroke-width="2.2"/>
+          </svg>
+        </div>
+        <div class="auriga-brand-text">
+          <span class="auriga-brand-name">Transatel</span>
+          <span class="auriga-brand-sub">Global Connectivity</span>
+        </div>
+      </a>
+      <div class="auriga-header-divider"></div>
+      <span class="auriga-product-name">Auriga</span>
+      <div class="auriga-header-divider auriga-header-divider--faint"></div>
+      <!-- Nav links -->
+      <nav class="auriga-nav-links" aria-label="Main navigation">
+        <a href="https://auriga.transatel.com" target="_blank" class="auriga-nav-link" id="nav-link-portal">SIM Portal</a>
+        <a href="https://developers.transatel.com" target="_blank" class="auriga-nav-link" id="nav-link-dev">Developer Portal</a>
+        <a href="https://docs.transatel.com" target="_blank" class="auriga-nav-link" id="nav-link-docs">Knowledge Center</a>
+        <a href="https://support.transatel.com" target="_blank" class="auriga-nav-link" id="nav-link-support">Support</a>
+      </nav>
+    </div>
+    <div class="auriga-header-right">
+      <div class="auriga-lang-toggle" role="group" aria-label="Language">
+        <button class="active" id="btn-en" onclick="setLang('en')">EN</button>
+        <span class="auriga-lang-chevron">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 4.5L6 7.5L9 4.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <button id="btn-fr" onclick="setLang('fr')">FR</button>
+      </div>
+    </div>
+  </header>
 
-<main>
-  <h1>Transatel AI Assistant</h1>
-  <p>Ask anything about our APIs, documentation and integrations.</p>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      <span id="hero-badge-text">Beta</span>
+    </div>
+    <h1 id="hero-title">Ask anything about<br/><span>Auriga & our APIs</span></h1>
+    <p class="hero-sub" id="hero-sub">
+      Your AI-powered guide to Transatel's Auriga platform, API integration, and core concepts — trained on our official developer documentation and knowledge center.
+    </p>
+    <button class="hero-cta" id="hero-cta" onclick="openKapa()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span id="hero-cta-text">Start a conversation</span>
+    </button>
+  </section>
 
-  <button class="cta" onclick="window.Kapa.open()">
-    Ask AI Assistant
-  </button>
-</main>
+  <!-- Features -->
+  <section class="features">
+    <div class="features-inner">
+      <div class="section-label" id="features-label">What you can ask</div>
+      <h2 class="section-title" id="features-title">Three ways to get answers, instantly</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3 id="card1-title">Auriga Platform</h3>
+          <p id="card1-desc">Understand how to configure your SIM management, set up profiles, and manage your fleet through the Auriga portal.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3 id="card2-title">API Integration</h3>
+          <p id="card2-desc">Get help with authentication, endpoints, request formats, and code snippets to integrate Transatel APIs into your platform.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h3 id="card3-title">Core Concepts</h3>
+          <p id="card3-desc">Explore eSIM, GSMA standards, RSP architecture, and Transatel-specific product concepts explained in plain language.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  Demo powered by kapa.ai
-</footer>
+  <!-- Beta notice -->
+  <section class="beta-notice">
+    <div class="beta-notice-inner">
+      <div class="notice-box">
+        <div class="notice-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="notice-content">
+          <h3 id="notice-title">Beta — Please read before using</h3>
+          <p id="notice-text">This assistant is in <strong>early beta</strong>. Answers are generated from Transatel's official documentation but may occasionally be incomplete or imprecise. Always verify critical information in the <a href="https://developers.transatel.com" target="_blank" style="color:var(--purple);font-weight:500;">developer portal</a> or <a href="https://docs.transatel.com" target="_blank" style="color:var(--purple);font-weight:500;">knowledge center</a>. <strong>Do not share sensitive, confidential, or personal information</strong> (API keys, credentials, customer data, personal details) in this chat.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- Kapa Widget -->
-<script
-  async
-  src="https://widget.kapa.ai/kapa-widget.bundle.js"
-  data-website-id="be78e0fc-ec50-4001-95c8-624e6387d738"
-  data-project-name="Transatel AI Assistant (beta)"
-  data-project-color="#0033A0"
-  data-project-logo="https://upload.wikimedia.org/wikipedia/commons/0/03/NTT_logo_2013.svg">
-</script>
+  <!-- Open chatbot -->
+  <section class="chatbot-section">
+    <div class="chatbot-inner">
+      <div class="section-label" id="chatbot-label">AI Assistant</div>
+      <h2 class="section-title" id="chatbot-title">Ready to answer your questions</h2>
+      <p class="chatbot-desc" id="chatbot-desc">
+        Trained on <strong>developers.transatel.com</strong> and <strong>docs.transatel.com</strong>, this assistant knows Auriga, our REST APIs, and eSIM concepts inside out.
+      </p>
+      <button class="open-chat-btn" onclick="openKapa()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span id="chatbot-btn-text">Ask the assistant</span>
+      </button>
+      <div class="sources-note" id="sources-note">
+        <span id="sources-label">Trained on:</span>
+        <a href="https://developers.transatel.com" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          developers.transatel.com
+        </a>
+        <a href="https://docs.transatel.com" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          docs.transatel.com
+        </a>
+      </div>
+    </div>
+  </section>
 
+  <!-- Footer -->
+  <footer>
+    <span id="footer-copy">© 2025 Transatel — AI Assistant for Auriga</span>
+    <div class="footer-links">
+      <a href="https://transatel.com" target="_blank" id="footer-home">transatel.com</a>
+      <a href="https://developers.transatel.com" target="_blank" id="footer-dev">Developer Portal</a>
+      <a href="https://docs.transatel.com" target="_blank" id="footer-docs">Knowledge Center</a>
+      <a href="https://support.transatel.com" target="_blank" id="footer-support">Support</a>
+    </div>
+  </footer>
+
+  <!-- i18n + kapa logic -->
+  <script>
+    const copy = {
+      en: {
+        navLabel: 'AI Assistant',
+        heroBadge: 'Beta',
+        heroTitle: 'Ask anything about<br/><span>Auriga & our APIs</span>',
+        heroSub: 'Your AI-powered guide to Transatel\'s Auriga platform, API integration, and core concepts — trained on our official developer documentation and knowledge center.',
+        heroCta: 'Start a conversation',
+        featuresLabel: 'What you can ask',
+        featuresTitle: 'Three ways to get answers, instantly',
+        card1Title: 'Auriga Platform',
+        card1Desc: 'Understand how to configure your SIM management, set up profiles, and manage your fleet through the Auriga portal.',
+        card2Title: 'API Integration',
+        card2Desc: 'Get help with authentication, endpoints, request formats, and code snippets to integrate Transatel APIs into your platform.',
+        card3Title: 'Core Concepts',
+        card3Desc: 'Explore eSIM, GSMA standards, RSP architecture, and Transatel-specific product concepts explained in plain language.',
+        noticeTitle: 'Beta — Please read before using',
+        noticeText: 'This assistant is in <strong>early beta</strong>. Answers are generated from Transatel\'s official documentation but may occasionally be incomplete or imprecise. Always verify critical information in the <a href="https://developers.transatel.com" target="_blank" style="color:var(--purple);font-weight:500;">developer portal</a> or <a href="https://docs.transatel.com" target="_blank" style="color:var(--purple);font-weight:500;">knowledge center</a>. <strong>Do not share sensitive, confidential, or personal information</strong> (API keys, credentials, customer data, personal details) in this chat.',
+        chatbotLabel: 'AI Assistant',
+        chatbotTitle: 'Ready to answer your questions',
+        chatbotDesc: 'Trained on <strong>developers.transatel.com</strong> and <strong>docs.transatel.com</strong>, this assistant knows Auriga, our REST APIs, and eSIM concepts inside out.',
+        chatbotBtn: 'Ask the assistant',
+        sourcesLabel: 'Trained on:',
+        footerCopy: '© 2025 Transatel — AI Assistant for Auriga',
+        footerHome: 'transatel.com',
+        footerDev: 'Developer Portal',
+        footerDocs: 'Knowledge Center',
+        footerSupport: 'Support',
+        pageTitle: 'Auriga AI Assistant – Transatel',
+      },
+      fr: {
+        navLabel: 'Assistant IA',
+        heroBadge: 'Bêta',
+        heroTitle: 'Posez vos questions sur<br/><span>Auriga & nos APIs</span>',
+        heroSub: 'Votre assistant IA pour la plateforme Auriga, l\'intégration des APIs et les concepts clés de Transatel — entraîné sur notre documentation officielle.',
+        heroCta: 'Démarrer une conversation',
+        featuresLabel: 'Ce que vous pouvez demander',
+        featuresTitle: 'Trois façons d\'obtenir des réponses, instantanément',
+        card1Title: 'Plateforme Auriga',
+        card1Desc: 'Comprenez comment configurer la gestion de vos SIM, créer des profils et piloter votre parc depuis le portail Auriga.',
+        card2Title: 'Intégration API',
+        card2Desc: 'Obtenez de l\'aide sur l\'authentification, les endpoints, les formats de requêtes et des exemples de code pour intégrer les APIs Transatel.',
+        card3Title: 'Concepts Clés',
+        card3Desc: 'Explorez l\'eSIM, les standards GSMA, l\'architecture RSP et les concepts produits Transatel expliqués simplement.',
+        noticeTitle: 'Bêta — À lire avant utilisation',
+        noticeText: 'Cet assistant est en <strong>bêta</strong>. Les réponses sont générées à partir de la documentation officielle de Transatel, mais peuvent parfois être incomplètes ou imprécises. Vérifiez toujours les informations critiques sur le <a href="https://developers.transatel.com" target="_blank" style="color:var(--purple);font-weight:500;">portail développeur</a> ou le <a href="https://docs.transatel.com" target="_blank" style="color:var(--purple);font-weight:500;">centre de connaissance</a>. <strong>Ne partagez pas d\'informations sensibles, confidentielles ou personnelles</strong> (clés API, identifiants, données clients, coordonnées personnelles) dans ce chat.',
+        chatbotLabel: 'Assistant IA',
+        chatbotTitle: 'Prêt à répondre à vos questions',
+        chatbotDesc: 'Entraîné sur <strong>developers.transatel.com</strong> et <strong>docs.transatel.com</strong>, cet assistant maîtrise Auriga, nos APIs REST et les concepts eSIM.',
+        chatbotBtn: 'Poser une question',
+        sourcesLabel: 'Sources :',
+        footerCopy: '© 2025 Transatel — Assistant IA pour Auriga',
+        footerHome: 'transatel.com',
+        footerDev: 'Portail développeur',
+        footerDocs: 'Centre de connaissance',
+        footerSupport: 'Support',
+        pageTitle: 'Assistant IA Auriga – Transatel',
+      }
+    };
+
+    let currentLang = 'en';
+
+    function setLang(lang) {
+      currentLang = lang;
+      const t = copy[lang];
+      document.documentElement.lang = lang;
+      document.title = t.pageTitle;
+
+      document.getElementById('nav-label').textContent = t.navLabel;
+      document.getElementById('hero-badge-text').textContent = t.heroBadge;
+      document.getElementById('hero-title').innerHTML = t.heroTitle;
+      document.getElementById('hero-sub').textContent = t.heroSub;
+      document.getElementById('hero-cta-text').textContent = t.heroCta;
+      document.getElementById('features-label').textContent = t.featuresLabel;
+      document.getElementById('features-title').textContent = t.featuresTitle;
+      document.getElementById('card1-title').textContent = t.card1Title;
+      document.getElementById('card1-desc').textContent = t.card1Desc;
+      document.getElementById('card2-title').textContent = t.card2Title;
+      document.getElementById('card2-desc').textContent = t.card2Desc;
+      document.getElementById('card3-title').textContent = t.card3Title;
+      document.getElementById('card3-desc').textContent = t.card3Desc;
+      document.getElementById('notice-title').textContent = t.noticeTitle;
+      document.getElementById('notice-text').innerHTML = t.noticeText;
+      document.getElementById('chatbot-label').textContent = t.chatbotLabel;
+      document.getElementById('chatbot-title').textContent = t.chatbotTitle;
+      document.getElementById('chatbot-desc').innerHTML = t.chatbotDesc;
+      document.getElementById('chatbot-btn-text').textContent = t.chatbotBtn;
+      document.getElementById('sources-label').textContent = t.sourcesLabel;
+      document.getElementById('footer-copy').textContent = t.footerCopy;
+      document.getElementById('footer-home').textContent = t.footerHome;
+      document.getElementById('footer-dev').textContent = t.footerDev;
+      document.getElementById('footer-docs').textContent = t.footerDocs;
+      document.getElementById('footer-support').textContent = t.footerSupport;
+
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+
+      // Tell kapa.ai the active language if it supports it
+      if (window.Kapa) {
+        try { window.Kapa.setLanguage(lang); } catch(e) {}
+      }
+    }
+
+    function openKapa() {
+      // kapa.ai widget exposes a global open trigger
+      if (window.Kapa && typeof window.Kapa.open === 'function') {
+        window.Kapa.open();
+      } else {
+        // fallback: click kapa's launcher button if injected
+        const btn = document.querySelector('[data-kapa-widget] button, #kapa-widget-container button, .kapa-launcher');
+        if (btn) btn.click();
+        else alert('The chat widget is loading, please try again in a moment.');
+      }
+    }
+  </script>
 </body>
 </html>
