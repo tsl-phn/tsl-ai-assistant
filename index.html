@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Transatel AI Assistant</title>
+
+  <!-- Responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f9fafb;
+      color: #111827;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      height: 32px;
+    }
+
+    .logo span {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    main {
+      text-align: center;
+      margin-top: 100px;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 18px;
+      color: #6b7280;
+      margin-bottom: 32px;
+    }
+
+    .cta {
+      background: #0033A0; /* NTT blue */
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .cta:hover {
+      background: #00267a;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 12px;
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      background: #f3f4f6;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/NTT_logo_2013.svg" alt="NTT logo">
+    <span>Transatel Developer Platform</span>
+  </div>
+</header>
+
+<main>
+  <h1>Transatel AI Assistant</h1>
+  <p>Ask anything about our APIs, documentation and integrations.</p>
+
+  <button class="cta" onclick="window.Kapa.open()">
+    Ask AI Assistant
+  </button>
+</main>
+
+<footer>
+  Demo powered by kapa.ai
+</footer>
+
+<!-- Kapa Widget -->
+<script
+  async
+  src="https://widget.kapa.ai/kapa-widget.bundle.js"
+  data-website-id="be78e0fc-ec50-4001-95c8-624e6387d738"
+  data-project-name="Transatel AI Assistant (beta)"
+  data-project-color="#0033A0"
+  data-project-logo="https://upload.wikimedia.org/wikipedia/commons/0/03/NTT_logo_2013.svg">
+</script>
+
+</body>
+</html>
