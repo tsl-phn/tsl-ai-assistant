@@ -10,12 +10,16 @@
   <script async src="https://widget.kapa.ai/kapa-widget.bundle.js"
     data-website-id="be78e0fc-ec50-4001-95c8-624e6387d738"
     data-project-name="Transatel"
+    data-modal-title-text="Transatel AI Assistant"
     data-project-color="#0033A0"
     data-project-logo="https://auriga.transatel.com/content/images/logo_transatel_ntt.svg"
     data-mcp-enabled="true"
     data-mcp-server-url="https://transatel.mcp.kapa.ai"
     data-launcher-button-hidden="true"
-    answer-feedback-button-enabled="true">
+    answer-feedback-button-enabled="true"
+    data-modal-disclaimer="Everything you wanted to ask about Transatel platform, from Auriga, to the APIs integrations.You can also use the MCP Server to embed the help within your own tools, like ChatGPT or Claude."
+    data-ask-ai-input-placeholder="Ask anything about Auriga or even our APIs."
+    data-example-questions="What is the SIM lifecycle?,How to activate SIMs with APIs?,How to retrieve CDRs?,How to subscribe to a bundle?">
     </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,7 +33,7 @@
       --primary-light: #80B9DD;
       --primary-faint: #F5F7FA;
       --accent:        #0072BC;
-      --text:          #373737;
+      --text:          #171717;
       --text-muted:    #52525B;
       --border:        #D4D4D8;
       --bg:            #FFFFFF;
@@ -362,7 +366,7 @@
     }
     .notice-icon { color: var(--primary); flex-shrink: 0; margin-top: 2px; }
     .notice-content h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; color: var(--primary-dark); }
-    .notice-content p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+    .notice-content p { font-size: 14px; color: var(--text); line-height: 1.65; }
     .notice-content strong { color: var(--text); }
 
     /* ════════════════════════════════════════════════════════
@@ -396,16 +400,17 @@
     }
     .sources-note {
       margin-top: 20px;
-      font-size: 12px;
-      color: var(--text-muted);
+      font-size: 13px;
+      color: var(--text);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 16px;
+      gap: 8px;
       flex-wrap: wrap;
+
     }
     .sources-note a {
-      color: var(--primary);
+      color: var(--text);
       font-weight: 500;
       display: inline-flex;
       align-items: center;
@@ -494,48 +499,34 @@
       <span class="hero-badge-dot"></span>
       <span id="hero-badge-text">Beta</span>
     </div>
-    <h1 id="hero-title">Ask anything about<br/><span>Auriga &amp; our APIs</span></h1>
+    <h1 id="hero-title">Ask any questions and<br/><span>Integrate Transatel Faster</span></h1>
     <p class="hero-sub" id="hero-sub">
-      Your AI-powered guide to Transatel's Auriga platform, API integration, and core concepts — trained on our official developer documentation and knowledge center.
+      Your AI-powered guide to Transatel's Auriga platform, API integration, and core concepts.
     </p>
     <button class="hero-cta" onclick="openKapa()">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      <span id="hero-cta-text">Start a conversation</span>
+      <span id="hero-cta-text">Ask the assistant</span>
     </button>
-  </section>
-
-  <!-- ══ FEATURES ════════════════════════════════════════ -->
-  <section class="features">
-    <div class="features-inner">
-      <div class="section-label" id="features-label">What you can ask</div>
-      <h2 class="section-title" id="features-title">Three ways to get answers, instantly</h2>
-      <div class="cards">
-        <div class="card">
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          </div>
-          <h3 id="card1-title">Auriga Platform</h3>
-          <p id="card1-desc">Understand how to configure your SIM management, set up profiles, and manage your fleet through the Auriga portal.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          </div>
-          <h3 id="card2-title">API Integration</h3>
-          <p id="card2-desc">Get help with authentication, endpoints, request formats, and code snippets to integrate Transatel APIs into your platform.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          </div>
-          <h3 id="card3-title">Core Concepts</h3>
-          <p id="card3-desc">Explore eSIM, GSMA standards, RSP architecture, and Transatel-specific product concepts explained in plain language.</p>
-        </div>
-      </div>
+    
+    <p class="hero-sub" id="hero-sub">
+    <div class="sources-note">
+      <span id="hero-languages">Supported languages:</span>English, 中文, Français, 日本語, 한국어, Español, Deutsch, Čeština, Nederlands, Italiano, Português, Русский
     </div>
+    <div class="sources-note">
+      <span id="hero-training">Trained on: </span>
+      <a href="https://developers.transatel.com" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        developers.transatel.com
+      </a>
+      <a href="https://docs.transatel.com" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        docs.transatel.com
+      </a>
+    </div>
+    </p>
   </section>
 
-  <!-- ══ BETA NOTICE ═════════════════════════════════════ -->
+ <!-- ══ BETA NOTICE ═════════════════════════════════════ -->
   <section class="beta-notice">
     <div class="beta-notice-inner">
       <div class="notice-box">
@@ -550,28 +541,33 @@
     </div>
   </section>
 
-  <!-- ══ CHATBOT CTA ══════════════════════════════════════ -->
-  <section class="chatbot-section">
-    <div class="chatbot-inner">
-      <div class="section-label" id="chatbot-label">AI Assistant</div>
-      <h2 class="section-title" id="chatbot-title">Ready to answer your questions</h2>
-      <p class="chatbot-desc" id="chatbot-desc">
-        Trained on <strong>developers.transatel.com</strong> and <strong>docs.transatel.com</strong>, this assistant knows Auriga, our REST APIs, and eSIM concepts inside out.
-      </p>
-      <button class="open-chat-btn" onclick="openKapa()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        <span id="chatbot-btn-text">Ask the assistant</span>
-      </button>
-      <div class="sources-note">
-        <span id="sources-label">Trained on:</span>
-        <a href="https://developers.transatel.com" target="_blank">
-          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          developers.transatel.com
-        </a>
-        <a href="https://docs.transatel.com" target="_blank">
-          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          docs.transatel.com
-        </a>
+  <!-- ══ FEATURES ════════════════════════════════════════ -->
+  <section class="features">
+    <div class="features-inner">
+      <div class="section-label" id="features-label">How to get answers</div>
+      <h2 class="section-title" id="features-title">Three ways to get answers, instantly</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3 id="card1-title">Use it directly on this web page</h3>
+          <p id="card1-desc">Open the assistant from this page to ask questions about Transatel documentation and integration guidance without leaving the site.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M3 12h18"/><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+          </div>
+          <h3 id="card2-title">Add it in Cursor or VS Code</h3>
+          <p id="card2-desc">In the assistant, click the <strong>Use MCP</strong> button, then install the documentation MCP server to bring Transatel knowledge into your editor workflow.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </div>
+          <h3 id="card3-title">Connect it with the MCP URL</h3>
+          <p id="card3-desc">Copy the MCP server URL and use it with the Claude CLI, ChatGPT, or other compatible services to access the same documentation context.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -592,23 +588,21 @@
     const copy = {
       en: {
         heroBadge:      'Beta',
-        heroTitle:      'Ask anything about<br/><span>Auriga &amp; our APIs</span>',
-        heroSub:        "Your AI-powered guide to Transatel's Auriga platform, API integration, and core concepts – trained on our official developer documentation and knowledge center.",
-        heroCta:        'Start a conversation',
-        featuresLabel:  'What you can ask',
+        heroTitle:      'Ask any question and<br/><span>Integrate Transatel Faster</span>',
+        heroSub:        "Your AI-powered guide to Auriga, API integration,<br/>and even core concepts.",
+        heroCta:        'Ask the assistant',
+        heroLanguages:  'Supported languages: ',
+        heroTraining:   'Trained on: ',
+        featuresLabel:  'How to get answers',
         featuresTitle:  'Three ways to get answers, instantly',
-        card1Title:     'Auriga Platform',
-        card1Desc:      'Understand how to configure your SIM management, set up profiles, and manage your fleet through the Auriga portal.',
-        card2Title:     'API Integration',
-        card2Desc:      'Get help with authentication, endpoints, request formats, and code snippets to integrate Transatel APIs into your platform.',
-        card3Title:     'Core Concepts',
-        card3Desc:      'Explore eSIM, GSMA standards, RSP architecture, and Transatel-specific product concepts explained in plain language.',
+        cardWebTitle:   'Use it directly on this web page',
+        cardWebDesc:    'Open the assistant from this page to ask questions about Transatel documentation and integration guidance without leaving the site.',
+        cardCursorTitle:'Add it in Cursor or VS Code',
+        cardCursorDesc: 'In the assistant, click the “Use MCP” button, then install the documentation MCP server to bring Transatel knowledge into your editor workflow.',
+        cardMcpTitle:   'Connect it with the MCP URL',
+        cardMcpDesc:    'Copy the MCP server URL and use it with the Claude CLI, ChatGPT, or other compatible services to access the same documentation context.',
         noticeTitle:    'Beta — Please read before using',
         noticeText:     'This assistant is in <strong>early beta</strong>. Answers are generated from Transatel\'s official documentation but may occasionally be incomplete or imprecise. Always verify critical information in the <a href="https://developers.transatel.com" target="_blank" style="color:var(--primary);font-weight:500;">developer portal</a> or <a href="https://docs.transatel.com" target="_blank" style="color:var(--primary);font-weight:500;">knowledge center</a>.<br/><strong>Do not share sensitive, confidential, or personal information</strong> (API keys, credentials, customer data, personal details) in this chat.',
-        chatbotLabel:   'AI Assistant',
-        chatbotTitle:   'Ready to answer your questions',
-        chatbotDesc:    'Trained on <strong>developers.transatel.com</strong> and <strong>docs.transatel.com</strong>, this assistant knows Auriga, our REST APIs, and eSIM concepts inside out.',
-        chatbotBtn:     'Ask the assistant',
         sourcesLabel:   'Trained on:',
         navPortal:      'Auriga',
         navDev:         'Developer Portal',
@@ -624,25 +618,23 @@
       },
       fr: {
         heroBadge:      'Bêta',
-        heroTitle:      'Posez vos questions sur<br/><span>Auriga &amp; nos API</span>',
-        heroSub:        "Votre assistant IA pour la plateforme Auriga, l'intégration des API et les concepts clés de Transatel – entraîné sur notre documentation officielle.",
-        heroCta:        'Démarrer une conversation',
-        featuresLabel:  'Ce que vous pouvez demander',
+        heroTitle:      'Posez toutes vos questions et<br/><span>Intégrez Transatel rapidement</span>',
+        heroSub:        "Votre assistant IA pour la plateforme Auriga, l'intégration des API<br/>et les concepts clés de Transatel.",
+        heroCta:        'Demandez à l\'assistant',
+        heroLanguages:  'Langues supportées : ',
+        heroTraining:   'Entraîné sur : ',
+        featuresLabel:  'Comment obtenir des réponses',
         featuresTitle:  'Trois façons d\'obtenir des réponses, instantanément',
-        card1Title:     'Plateforme Auriga',
-        card1Desc:      'Comprenez comment configurer la gestion de vos SIM, créer des profils et piloter votre parc depuis le portail Auriga.',
-        card2Title:     'Intégration API',
-        card2Desc:      'Obtenez de l\'aide sur l\'authentification, les endpoints, les formats de requêtes et des exemples de code pour intégrer les API Transatel.',
-        card3Title:     'Concepts Clés',
-        card3Desc:      'Explorez l\'eSIM, les standards GSMA, l\'architecture RSP et les concepts produits Transatel expliqués simplement.',
+        cardWebTitle:   'Utilisez-le directement depuis cette page web',
+        cardWebDesc:    'Ouvrez l\'assistant depuis cette page pour poser des questions sur la documentation Transatel et les conseils d\'intégration sans quitter le site.',
+        cardCursorTitle:'Ajoutez-le dans Cursor ou VS Code',
+        cardCursorDesc: 'Dans l\'assistant, cliquez sur le bouton « Use MCP », puis installez le serveur MCP de la documentation pour intégrer la connaissance Transatel à votre flux de travail dans l\'éditeur.',
+        cardMcpTitle:   'Connectez-le avec l\'URL MCP',
+        cardMcpDesc:    'Copiez l\'URL du serveur MCP et utilisez-la avec le CLI Claude, ChatGPT ou d\'autres services compatibles pour accéder au même contexte documentaire.',
         noticeTitle:    'Bêta — À lire avant utilisation',
         noticeText:     'Cet assistant est en <strong>bêta</strong>. Les réponses sont générées à partir de la documentation officielle de Transatel, mais peuvent parfois être incomplètes ou imprécises. Vérifiez toujours les informations critiques sur le <a href="https://developers.transatel.com" target="_blank" style="color:var(--primary);font-weight:500;">portail développeur</a> ou le <a href="https://docs.transatel.com" target="_blank" style="color:var(--primary);font-weight:500;">centre de connaissance</a>.<br/><strong>Ne partagez pas d\'informations sensibles, confidentielles ou personnelles</strong> (clés API, identifiants, données clients, coordonnées personnelles) dans ce chat.',
-        chatbotLabel:   'Assistant IA',
-        chatbotTitle:   'Prêt à répondre à vos questions',
-        chatbotDesc:    'Entraîné sur <strong>developers.transatel.com</strong> et <strong>docs.transatel.com</strong>, cet assistant maîtrise Auriga, nos API REST et les concepts eSIM.',
-        chatbotBtn:     'Poser une question',
         sourcesLabel:   'Sources :',
-        navPortal:      'Portail SIM',
+        navPortal:      'Auriga',
         navDev:         'Portail développeur',
         navDocs:        'Centre de connaissance',
         navSupport:     'Support',
@@ -667,19 +659,16 @@
       document.getElementById('hero-cta-text').textContent    = t.heroCta;
       document.getElementById('features-label').textContent   = t.featuresLabel;
       document.getElementById('features-title').textContent   = t.featuresTitle;
-      document.getElementById('card1-title').textContent      = t.card1Title;
-      document.getElementById('card1-desc').textContent       = t.card1Desc;
-      document.getElementById('card2-title').textContent      = t.card2Title;
-      document.getElementById('card2-desc').textContent       = t.card2Desc;
-      document.getElementById('card3-title').textContent      = t.card3Title;
-      document.getElementById('card3-desc').textContent       = t.card3Desc;
+      document.getElementById('card1-title').textContent      = t.cardWebTitle;
+      document.getElementById('card1-desc').textContent       = t.cardWebDesc;
+      document.getElementById('card2-title').textContent      = t.cardCursorTitle;
+      document.getElementById('card2-desc').textContent       = t.cardCursorDesc;
+      document.getElementById('card3-title').textContent      = t.cardMcpTitle;
+      document.getElementById('card3-desc').textContent       = t.cardMcpDesc;
       document.getElementById('notice-title').textContent     = t.noticeTitle;
       document.getElementById('notice-text').innerHTML        = t.noticeText;
-      document.getElementById('chatbot-label').textContent    = t.chatbotLabel;
-      document.getElementById('chatbot-title').textContent    = t.chatbotTitle;
-      document.getElementById('chatbot-desc').innerHTML       = t.chatbotDesc;
-      document.getElementById('chatbot-btn-text').textContent = t.chatbotBtn;
-      document.getElementById('sources-label').textContent    = t.sourcesLabel;
+      document.getElementById('hero-languages').textContent   = t.heroLanguages;
+      document.getElementById('hero-training').textContent    = t.heroTraining;
       document.getElementById('nav-portal').textContent       = t.navPortal;
       document.getElementById('nav-dev').textContent          = t.navDev;
       document.getElementById('nav-docs').textContent         = t.navDocs;
